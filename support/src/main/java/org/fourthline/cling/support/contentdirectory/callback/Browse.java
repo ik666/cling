@@ -92,12 +92,7 @@ public abstract class Browse extends ActionCallback {
     public void success(ActionInvocation invocation) {
         log.fine("Successful browse action, reading output argument values");
 
-        BrowseResult result = new BrowseResult(
-                invocation.getOutput("Result").getValue().toString(),
-                (UnsignedIntegerFourBytes) invocation.getOutput("NumberReturned").getValue(),
-                (UnsignedIntegerFourBytes) invocation.getOutput("TotalMatches").getValue(),
-                (UnsignedIntegerFourBytes) invocation.getOutput("UpdateID").getValue()
-        );
+        BrowseResult result = generateBrowseResult(invocation);
 
         boolean proceed = receivedRaw(invocation, result);
 
@@ -105,8 +100,7 @@ public abstract class Browse extends ActionCallback {
 
             try {
 
-                DIDLParser didlParser = new DIDLParser();
-                DIDLContent didl = didlParser.parse(result.getResult());
+                DIDLContent didl = generateDidlContent(result);
                 received(invocation, didl);
                 updateStatus(Status.OK);
 
@@ -121,6 +115,29 @@ public abstract class Browse extends ActionCallback {
             received(invocation, new DIDLContent());
             updateStatus(Status.NO_CONTENT);
         }
+    }
+
+    public DIDLContent generateDidlContent(ActionInvocation invocation) throws Exception
+    {
+        return generateDidlContent(generateBrowseResult(invocation));
+    }
+
+    public DIDLContent generateDidlContent(BrowseResult result) throws Exception
+    {
+        DIDLParser didlParser = new DIDLParser();
+        DIDLContent didl = didlParser.parse(result.getResult());
+        return didl;
+    }
+
+    public BrowseResult generateBrowseResult(ActionInvocation invocation)
+    {
+        BrowseResult result = new BrowseResult(
+                invocation.getOutput("Result").getValue().toString(),
+                (UnsignedIntegerFourBytes) invocation.getOutput("NumberReturned").getValue(),
+                (UnsignedIntegerFourBytes) invocation.getOutput("TotalMatches").getValue(),
+                (UnsignedIntegerFourBytes) invocation.getOutput("UpdateID").getValue()
+        );
+        return result;
     }
 
     /**
