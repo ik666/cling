@@ -1,3 +1,36 @@
+# Clink-Fork
+
+This is a fork of the initial Cling project [found here](https://github.com/4thline/cling).
+
+## Maintainance status
+
+### Java
+
+Source code is ported to JDK 11. 
+
+### supported Cling modules 
+
+- cling root project
+- cling core module
+- cling support modules
+
+### removed support
+
+- removed Android support
+- removed other cling modules not mentioned above
+
+### build
+
+Currently tests are failing. Until further investigation, build modules with tests skipped: 
+
+```
+mvn install -DskipTests=true
+```
+
+# Initial cling README.md [REFERENCE]
+
+---
+
 # Cling EOL: This project is no longer actively maintained, code may be outdated. If you are interested in maintaining and developing this project, comment [here](https://github.com/4thline/cling/issues/244).
 
 ---
