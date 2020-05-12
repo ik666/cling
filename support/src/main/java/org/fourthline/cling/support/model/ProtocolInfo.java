@@ -33,7 +33,7 @@ public class ProtocolInfo {
     protected String additionalInfo = WILDCARD;
 
     public ProtocolInfo(String s) throws InvalidValueException {
-        if (s == null) throw new NullPointerException();
+        if (s == null) return;  // Ignore unknown properties, so we can use this parser for Metadata Information
         s = s.trim();
         String[] split = s.split(":");
         if (split.length != 4) {
