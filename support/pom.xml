@@ -32,7 +32,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.fourthline.cling</groupId>
+            <groupId>org.fourthline.cling-forked</groupId>
             <artifactId>cling-core</artifactId>
             <version>${project.version}</version>
         </dependency>
